@@ -90,7 +90,7 @@ of a directional derivative, as seen below:
         1 & Let $\vec{u}$ be some arbitrary vector & Assumption\\
         2 & Let $\theta$ be the angle between $\vec{u}$ and $\nabla f$ & Assumption \\
         2 & $\fvec{u} = \frac{\vec{u}}{|\vec{u}|}$ & Definition of unit vector\\
-        3 & $D_{\vec{u}}f = \nabla f \cdot \fvec{u}$ & Definition of dir. der.\\
+        3 & $D_{\vec{u}}f = \nabla f \cdot \fvec{u}$ & Definition of directional der.\\
         4 & $D_{\vec{u}}f = \frac{\nabla f \cdot \vec{u}}{|\vec{u}|}$ & Substitution of line 2 into 3 \\
         5 & $D_{\vec{u}}f = \frac{|\nabla f| |\vec{u}| cos(\theta)}{|\vec{u}|}$ & Definition of dot product \\
         6 & $D_{\vec{u}}f = |\nabla f| cos(\theta)$ & Reduction \\
@@ -106,10 +106,63 @@ of a directional derivative, as seen below:
         16 & $max(D_{\vec{u}}f(P_0)) = |\nabla f(P_0)|$ & Result
     \end{tabular}
 \end{center}
-As demonstrated above, the maximium value of the directional derivative taken at a point is the gradient evaluated at that point.
+As demonstrated above, the maximium value of the directional derivative taken at a point is the gradient evaluated at that point.\\
 
+Gradient descent leverages this to know which direction to \textit{avoid}--to go downhill, simply don't go uphill. With that in mind,
+we can define the process for gradient descent:
+
+\begin{center}
+    \begin{tabular}{l | c | l}
+        0 & Move \textit{away} from the direction of steepest ascent & Problem\\
+        1 & Let $P$ be an arbitrary starting position & Assumption\\
+        2 & Let $\gamma$ be the scalar distance of a step & Assumption\\
+        3 & $P_{n+1} = P_n - \gamma \nabla f(P_n)$ & Gradient Descent \\
+    \end{tabular}
+\end{center}
+
+With the formula for gradient descent defined, we can demonstrate an example:
+\begin{center}
+    \begin{tabular}{l | c | l}
+        0 & Minimize $f$ using gradient descent & Problem\\
+        1 & Let $f(x,y)=x^2+y^2$ & Assumption\\
+        2 & Let $\gamma = \frac{1}{2}$ & Assumption\\
+        3 & Let $P_0 = (2,2)$ & Assumption\\
+        4 & $P_{n+1} = P_n - \gamma \nabla f(P_n)$ & Gradient Descent \\
+        5 & $P_{1} = (2,2) - \frac{1}{2} \nabla f(P_0)$ & Substituting lines 1,2,3 \\
+        6 & $\nabla f = \frac{\partial}{\partial x}f(x,y)\boldsymbol{\hat{\textbf{\i}}} + \frac{\partial}{\partial y}f(x,y)\boldsymbol{\hat{\textbf{\j}}}$ & Definition of gradient \\
+        7 & $\frac{\partial}{\partial x}f(x,y) = 2x$ & Reduction \\
+        8 & $\frac{\partial}{\partial y}f(x,y) = 2y$ & Reduction \\
+        9 & $\nabla f = 2x\boldsymbol{\hat{\textbf{\i}}} + 2y \boldsymbol{\hat{\textbf{\j}}}$ & Substituting lines 7,8 \\
+        10 & $\nabla f(P_0) = 2(2)\boldsymbol{\hat{\textbf{\i}}} + 2(2) \boldsymbol{\hat{\textbf{\j}}}$ & Substituting line 3 \\
+        11 & $P_{1} = (2,2) - \frac{1}{2} (4\boldsymbol{\hat{\textbf{\i}}} + 4 \boldsymbol{\hat{\textbf{\j}}})$ & Combining lines 5,10 \\
+        12 & $P_{1} = (2,2) - (2\boldsymbol{\hat{\textbf{\i}}} + 2 \boldsymbol{\hat{\textbf{\j}}})$ & Reducing \\
+        13 & $P_{1} = (0,0)$ & Reducing \\
+        14 & $P_{2} = P_1 - \frac{1}{2} \nabla(P_1)$ & Setting up next step \\
+        15 & $\nabla f(P_1) = 2(0)\boldsymbol{\hat{\textbf{\i}}} + 2(0) \boldsymbol{\hat{\textbf{\j}}}$ & Substituting from line 9 \\
+        16 & $\nabla f(P_1) = 0$ & Reducing \\
+        17 & $P_{2} = P_1 - \frac{1}{2} (0)$ & Combining lines 14,16\\
+        18 & $P_{2} = P_1$ & Reducing\\
+        19 & $P_{2} = P_1$ & Done, converged\\
+    \end{tabular}
+\end{center}
+The process ends when we converge on an answer (this is not always the case, depending on step size we can diverge). In this case the descent
+was fairly trivial and took only two iterations, but a more complex function like $f(x,y)=\frac{x^2cos(x)}{16} + \frac{y^2sin(y)}{24}$ would 
+likely take more steps (and more room than this paper has...).
 \section{What If...}
 
+If the gradient descent calculations had not been done correctly in \cite{lecun}, it is unlikely that the paper would have found any training
+improvements of note. In a best-case scenario, the errors would be caught during peer review and the only impact would be a several-month delay 
+in the publishing of the paper, with the presumed knock-on effect of delaying our current progress in machine learning by several months.\\
+
+In a worst-case scenario, the paper fails to find anything meaningful and is overlooked. Until some other researcher stumbled upon the idea of 
+using gradient descent to teach neural networks (with the \textit{proper} math in place), neural network research would likely have remained 
+much less accessible due to the ineffectiveness of training techniques. As a result, many common staples of today's technology such as image 
+recognition would be underdeveloped, with unpredictable but certainly negative economic impacts. \\
+
+The most concerning second-order effects would be to the medical advancements mentioned above--current cutting-edge medical machine learning 
+applications rely heavily on gradient descent. Any delay to the development of these technologies indirectly harms future patients by reducing 
+their potential quality of care. As such, in a worst-case scenario incorrect calculations in \cite{lecun} would cost lives, and conversely the 
+correct calculations may well turn out to save lives.
 
 \newpage
 \bibliographystyle{apalike}
