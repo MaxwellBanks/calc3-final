@@ -1,0 +1,17 @@
+# Blacklist all
+*
+
+# Allow looking in subdirectories
+!*/
+
+# Allow blacklist
+!.gitignore
+
+# Allow primary source code
+!*.tex
+!*.sty
+!*.md
+!*.bib
+
+# Allow pdfs (for now)
+!*.pdf

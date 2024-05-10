@@ -1,6 +1,8 @@
 \documentclass[11pt, a4paper]{article}
 \usepackage{tikz}
 \usetikzlibrary{positioning}
+\usepackage{natbib}
+\usepackage{hyperref}
 %----------Title Page---------
 \title{
     The Role of Gradients in Convolutional Neural Networks\\~\\
@@ -12,11 +14,12 @@
 %-----------------------------
 
 \begin{document}
+\nocite{*}
 \maketitle
 \newpage
 \section{Background: Neural Networks}
 Neural networks are a machine learning architecture commonly used for pattern recognition. Named for their 
-similarity to human brains, traditional neural networks break inputs are composed of groups of nodes (called 
+similarity to human brains, traditional neural networks are composed of groups of nodes (called 
 \textit{layers} of \textit{neurons}). Each node in a layer is connected to nodes in the preceding and following
 layers, and contains some innate value (called a \textit{weight}). To process data with a neural network, data
 is broken into discrete chunks that are fed into the first (input) layer of neurons. These neurons mutate the 
@@ -31,38 +34,42 @@ output nodes $O_1$ and $O_2$ corresponding to "dog" and "cat" respectively. The 
 \end{center}
 
 \section{Historical Event}
-This historical event analyzed by this paper is the publication of \textit{Gradient-Based Learning Applied to Document Recognition} (LeCun et al., 1998).
+This historical event analyzed by this paper is the publication of \textit{Gradient-Based Learning Applied to Document Recognition} \cite{lecun}.
 This paper revolutionized the training of neural networks and is the antecedent to much of the modern field of 
 machine learning. 
 
 \section{Summary}
-The breakout research paper \textit{Gradient-Based Learning Applied to Document Recognition} (LeCun et al., 1998)
+The breakout research paper \textit{Gradient-Based Learning Applied to Document Recognition} \cite{lecun}
 outlined LeNet-5, one of the first published instances of a Convolutional Neural Network (CNN). CNNs are a subtype
 of neural network that generally specialize in image recognition (this is not univerally true, but for brevity this
-paper will assume inputs are pixels of an image). LeCun et al. (1998) discusses using gradient-based learning 
+paper will assume inputs are pixels of an image). \cite{lecun} discusses using gradient-based learning 
 techniques to train neural networks in recognizing letters, highlighting a variety of network architectures 
 and explaining the effectiveness of gradient-based learning in the context of those architectures. \\
 
-LeCun et al. (1998) had wide-ranging impacts on the field of machine learning as a whole, but perhaps the most 
+\cite{lecun} had wide-ranging impacts on the field of machine learning as a whole, but perhaps the most 
 notable impact was the popularization of CNNs trained using gradient-based learning. As the paper itself notes, 
 "Gradient-Based Learning procedures have been used since the late 1950's, but they were mostly limited to 
-linear systems." (LeCun et al. 1998)  The key innovation of LeCun et at. (1998) was to apply gradient-based 
+linear systems." \cite{lecun} The key innovation of \textit{Gradient-Based Learning Applied to Document Recognition} was to apply gradient-based 
 learning (specifically, gradient descent) as a training mechanism for CNNs by using gradient descent to determine
 the adjustment of node weights by minimizing the "loss function", a function representing how incorrect a neural 
 network's guess was.\\
 
 Gradient descent is a technique that dates back to Augustin-Louis Cauchy who outlined the technique in his pamphlet 
-\textit{M\'ethode g\'en\'erale pour la r\'esolution des syst\`emes d'\'equations simultan\'ees} (Cauchy, 1847/2010). Cauchy described this technique as "...a general 
+\textit{M\'ethode g\'en\'erale pour la r\'esolution des syst\`emes d'\'equations simultan\'ees} \cite{cauchy}. Cauchy described this technique as "...a general 
 method which may be able to serve to resolve directly a system of simultaneous equations", and was mostly concerned
-with using it to determine the movement of a star with precision. This technique minimizes a system of equations by repeatedly
+with using it to determine the movement of a star with precision. This technique leverages calculus to minimize a system of equations by repeatedly
 calculating the gradient (interestingly, the paper itself does not appear to use the term gradient--it exclusively
 uses partial derivatives) at a point, then "stepping" in the opposite direction of the gradient to a "lower" point. This 
 process is repeated until a minimum is reached. 
 
-
-
 \section{Explanation of Enhancement}
 Explain in detail how the concepts utilized have directly led to innovations in our world that have made lives better for certain individuals, communities, nations, or the entire world
+
+- modern image recongition systems build off of LeNet-5
+    - Image recognition is now cheap and ubiquitous--this would not be possible without CNNs, which in turn would not be feasible without gradient descent
+- Multitude of usecases, but perhaps the most impactful is healthcare. Still in early stages, but huge potential
+    - CNN most effective (metastudy)
+    - CheXED (radiograph detection)
 
 \section{Calculus Steps}
 Explain the calculations utilized showing either a portion or all of the steps within the calculations.
@@ -70,9 +77,8 @@ Explain the calculations utilized showing either a portion or all of the steps w
 \section{What If...}
 
 
-\section{Bibliography}
-http://vision.stanford.edu/cs598_spring07/papers/Lecun98.pdf
-https://cs.uwaterloo.ca/~y328yu/classics/cauchy-en.pdf
-
+\newpage
+\bibliographystyle{apalike}
+\bibliography{bibliography}
 
 \end{document}
