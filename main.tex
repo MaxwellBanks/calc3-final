@@ -3,40 +3,30 @@
 \usetikzlibrary{positioning}
 \usepackage{natbib}
 \usepackage{hyperref}
+\usepackage{amsmath,amssymb}
 %----------Title Page---------
 \title{
     The Role of Gradients in Convolutional Neural Networks\\~\\
-    \large LeNet and the Use of Gradient Descent in Machine Learning}
+    \large The Impact of LeNet-5 and Gradient Descent on Modern Machine Learning}
 \author{
     Maxwell Banks
 }
 \date{May 9, 2024}
 %-----------------------------
+\newcommand\fvec[1]{\vec{\textbf{#1}}}
+\newcommand\bdot{\boldsymbol{\cdot}}
+
 
 \begin{document}
 \nocite{*}
 \maketitle
 \newpage
-\section{Background: Neural Networks}
-Neural networks are a machine learning architecture commonly used for pattern recognition. Named for their 
-similarity to human brains, traditional neural networks are composed of groups of nodes (called 
-\textit{layers} of \textit{neurons}). Each node in a layer is connected to nodes in the preceding and following
-layers, and contains some innate value (called a \textit{weight}). To process data with a neural network, data
-is broken into discrete chunks that are fed into the first (input) layer of neurons. These neurons mutate the 
-input according to their weight, then pass the result to the next (hidden) layer to continue the process. This 
-process continues until the final (output) layer, wherein each node outputs a single number. These numbers can 
-be used to classify inputs--for example, a neural net classifying images into "dog" or "cat" might have two
-output nodes $O_1$ and $O_2$ corresponding to "dog" and "cat" respectively. The classification of an image into
-"dog" or "cat" would be decided by $max(O_1, O_2)$. \\
-\begin{center}
-    \textbf{A Simple Diagram of a Neural Network}\\
-    \input{images/neural_net.tex}
-\end{center}
 
 \section{Historical Event}
-This historical event analyzed by this paper is the publication of \textit{Gradient-Based Learning Applied to Document Recognition} \cite{lecun}.
-This paper revolutionized the training of neural networks and is the antecedent to much of the modern field of 
-machine learning. 
+This historical event analyzed by this paper is the publication of \textit{Gradient-Based Learning Applied to 
+Document Recognition} \cite{lecun}. This paper revolutionized the training of neural networks and is the antecedent 
+to much of the modern field of machine learning. For a brief primer of the anatomy of a neural network, refer to 
+\hyperref[sec:neuralnet]{Appendix A}.
 
 \section{Summary}
 The breakout research paper \textit{Gradient-Based Learning Applied to Document Recognition} \cite{lecun}
@@ -63,16 +53,60 @@ uses partial derivatives) at a point, then "stepping" in the opposite direction 
 process is repeated until a minimum is reached. 
 
 \section{Explanation of Enhancement}
-Explain in detail how the concepts utilized have directly led to innovations in our world that have made lives better for certain individuals, communities, nations, or the entire world
+\cite{lecun} was a formative paper in the field of machine learning, especially computer vision. Modern CNNs can trace 
+their lineage directly back to LeNet-5, and other machine learning architectures are similarly dependent on gradient descent 
+as a training model. Because of the performance improvements in training neural nets afforded by \cite{lecun}, image 
+recognition is now cheap and fairly ubiquitous--everything from phones to kiosks is capable of analyzing images. \\
 
-- modern image recongition systems build off of LeNet-5
-    - Image recognition is now cheap and ubiquitous--this would not be possible without CNNs, which in turn would not be feasible without gradient descent
-- Multitude of usecases, but perhaps the most impactful is healthcare. Still in early stages, but huge potential
-    - CNN most effective (metastudy)
-    - CheXED (radiograph detection)
+There are a multitude of positive advancements that stem from the progeny of LeNet-5, but perhaps the most promising field 
+for image recognition is healthcare. Computer vision algorithms are being leveraged to help analyze medical scans and assist 
+doctors in finding complications faster and earlier--what takes a doctor hours to scan can be done at a high rate of accuracy
+by a neural network in mere seconds. \cite{rana}, a metastudy of fourty primary studies, notes that "various 
+classical [Machine Learning] and [Deep Learning] techniques are extensively applied [in the healthcare domain] to deal with 
+data uncertainty...". This on its own is impressive, but it further goes on to note that "...a series of experiments using 
+MRI dataset has provided a comparative analysis of [Machine Learning] classifiers and [Deep Learning] models where CNN (97.6\%) 
+and RF (96.93\%) have outperformed other algorithms." \cite{rana} Twenty years after the initial paper, CNNs (and the associated 
+gradient descent training mechanism) are more relevant than ever. \\
+
+CheXED is an excellent example of timesaving capabilites of CNNs in the medical field. Developed by researchers at Stanford, 
+CheXED scans radiograph images to detect pneumonia and "...required less than a second to identify the findings on a single chest 
+radiograph." \cite{irvin} CheXED is not yet capable of independently diagnosing a patient, but it does provide powerful initial 
+scan that can then direct doctors to potential problem areas faster. \cite{irvin} concludes that "Integration of CheXED with clinical 
+decision support systems like ePNa may help reduce time to diagnosis and improve pneumonia management in the emergency department." \\
+
+Machine learning in healthcare is still in early stages, but stands to save lives by minimizing the turnaround time between inspection 
+and diagnosis. At the forefront of this wave of innovation are CNNs, which would not have been possible without the training improvements 
+pioneered by \cite{lecun}.
+
 
 \section{Calculus Steps}
 Explain the calculations utilized showing either a portion or all of the steps within the calculations.
+Gradient descent relies on an important principle: \textit{the direction of a gradient evaluated at a 
+point is the direction of steepest ascent at that point}. This can be proven trivially from the definition
+of a directional derivative, as seen below:
+\begin{center}
+    \begin{tabular}{l | c | l}
+        0 & Find $max(D_{\vec{u}}f)$ at point $P_0$ & Problem\\
+        1 & Let $\vec{u}$ be some arbitrary vector & Assumption\\
+        2 & Let $\theta$ be the angle between $\vec{u}$ and $\nabla f$ & Assumption \\
+        2 & $\fvec{u} = \frac{\vec{u}}{|\vec{u}|}$ & Definition of unit vector\\
+        3 & $D_{\vec{u}}f = \nabla f \cdot \fvec{u}$ & Definition of dir. der.\\
+        4 & $D_{\vec{u}}f = \frac{\nabla f \cdot \vec{u}}{|\vec{u}|}$ & Substitution of line 2 into 3 \\
+        5 & $D_{\vec{u}}f = \frac{|\nabla f| |\vec{u}| cos(\theta)}{|\vec{u}|}$ & Definition of dot product \\
+        6 & $D_{\vec{u}}f = |\nabla f| cos(\theta)$ & Reduction \\
+        7 & $max(cos(\theta)) \rightarrow \{\theta | \theta = 2\pi n, n \in \mathbb{Z}\}$ & Definition of cosine \\
+        8 & $max(cos(\theta)) = cos(2\pi n)$ & Extension of line 7 \\
+        9 & Let $n = 0$ & Selection based on line 7 \\
+        10 & $max(cos(\theta)) = cos(2 \pi n) = cos(0)$ & Substitution of line 9 \\
+        11 & $max(D_{\vec{u}}f) = max(|\nabla f| cos(\theta))$ & Identity \\
+        12 & $max(D_{\vec{u}}f(P_0)) = max(|\nabla f(P_0)| cos(\theta))$ & Evaluating at point \\
+        13 & $max(D_{\vec{u}}f(P_0)) = |\nabla f(P_0)| max(cos(\theta))$ & Pulling out constant \\
+        14 & $max(D_{\vec{u}}f(P_0)) = |\nabla f(P_0)| cos(0)$ & Substitution of line 10\\
+        15 & $max(D_{\vec{u}}f(P_0)) = |\nabla f(P_0)|$ & Reduction \\
+        16 & $max(D_{\vec{u}}f(P_0)) = |\nabla f(P_0)|$ & Result
+    \end{tabular}
+\end{center}
+As demonstrated above, the maximium value of the directional derivative taken at a point is the gradient evaluated at that point.
 
 \section{What If...}
 
@@ -80,5 +114,24 @@ Explain the calculations utilized showing either a portion or all of the steps w
 \newpage
 \bibliographystyle{apalike}
 \bibliography{bibliography}
+
+\newpage
+\appendix
+\section{Appendix: How a Neural Network Works}
+\label{sec:neuralnet}
+Neural networks are a machine learning architecture commonly used for pattern recognition. Named for their 
+similarity to human brains, traditional neural networks are composed of groups of nodes (called 
+\textit{layers} of \textit{neurons}). Each node in a layer is connected to nodes in the preceding and following
+layers, and contains some innate value (called a \textit{weight}). To process data with a neural network, data
+is broken into discrete chunks that are fed into the first (input) layer of neurons. These neurons mutate the 
+input according to their weight, then pass the result to the next (hidden) layer to continue the process. This 
+process continues until the final (output) layer, wherein each node outputs a single number. These numbers can 
+be used to classify inputs--for example, a neural net classifying images into "dog" or "cat" might have two
+output nodes $O_1$ and $O_2$ corresponding to "dog" and "cat" respectively. The classification of an image into
+"dog" or "cat" would be decided by $max(O_1, O_2)$. \\
+\begin{center}
+    \textbf{A Simple Diagram of a Neural Network}\\
+    \input{images/neural_net.tex}
+\end{center}
 
 \end{document}
